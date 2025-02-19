@@ -2,7 +2,16 @@
   "name": "rss-bot-dashboard",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license":"MIT",
+  "author": "SaeedPoureshghi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TelegramBotDashboards/rss-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TelegramBotDashboards/rss-bot/issues"
+  },
+  "homepage": "https://github.com/TelegramBotDashboards/rss-bot#readme",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only server.ts",
     "start": "node dist/server.js",
