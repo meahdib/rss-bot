@@ -222,7 +222,7 @@ export const Dashboard = (_req: Request, res: Response) => {
     sconfig.service_name
   }. All rights reserved.</p>
           <div>
-               <a href="https://github.com/" class="text-cyan-400 hover:underline" target="_blank">
+               <a href="https://github.com/TelegramBotDashboards/rss-bot" class="text-cyan-400 hover:underline" target="_blank">
                   <i class="fab fa-github"></i> GitHub
               </a>
           </div>
