@@ -6,6 +6,9 @@ interface IChannel {
 interface BotData {
   lastFetch: string;
   feedUrl: string;
+  enableTranslation: boolean;
+  translationLanguage: string;
+  googleApiKey: string;
   channels: IChannel[];
 }
 

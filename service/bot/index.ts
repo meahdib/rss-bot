@@ -46,6 +46,7 @@ try {
 } catch (error) {
   console.error(
     "[SERVICE]",
+    "[ERROR]",
     `Error Starting BOT : ${(error as Error).message}`
   );
 }

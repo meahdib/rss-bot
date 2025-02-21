@@ -109,21 +109,24 @@ export const Dashboard = (_req: Request, res: Response) => {
                 sconfig.service_name
               } Dashboard
           </h1>
-          <div class="flex items-center space-x-2">
+          <div class="flex flex-col md:flex-row items-center space-x-0 md:space-x-2">
               <div class="w-10 h-10 rounded-full border-3 border-blue-700 flex items-center justify-center">
                   <i class="fas fa-user text-white"></i>
               </div>
               <span class="text-lg text-gray-200">Admin</span>
-              <form method="GET" action="/change-password">
-                 <button type="submit" class="bg-yellow-600 text-white px-4 py-1 rounded hover:bg-yellow-700 cursor-pointer">
-                     <i class="fas fa-key"></i> Change Password
-                 </button>
-             </form>
-              <form method="POST" action="/logout">
-                  <button type="submit" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 cursor-pointer">
-                      <i class="fas fa-sign-out-alt"></i> Logout
-                  </button>
-              </form>
+              <div class="flex flex-col md:flex-row gap-2 mt-2 md:mt-0">
+                  <form method="GET" action="/change-password">
+                     <button type="submit" class="bg-yellow-600 text-white px-4 py-1 rounded hover:bg-yellow-700 cursor-pointer relative group" title="Change Password">
+                         <i class="fas fa-key"></i>
+                         
+                     </button>
+                 </form>
+                  <form method="POST" action="/logout">
+                      <button type="submit" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 cursor-pointer" title="log out">
+                          <i class="fas fa-sign-out-alt"></i>
+                      </button>
+                  </form>
+              </div>
           </div>
       </div>
       <div class="flex  flex-wrap row items-center gap-2 mb-4 bg-gray-800 p-6 rounded shadow-md">
@@ -153,8 +156,8 @@ export const Dashboard = (_req: Request, res: Response) => {
           }
           </div>
     
-      <div class="flex gap-4 mb-4 flex-wrap">
-          <div class="flex-1 flex-col h-full flex-wrap"> 
+      <div class="flex-col gap-4 mb-8 flex-wrap">
+          <div class="flex-1 flex-col h-full flex-wrap mb-8"> 
               <h2 class="text-xl mb-2"><i class="fas fa-robot"></i> Bot Configuration</h2>
               
                   <div class="flex-1 bg-gray-800 p-6 rounded shadow-md h-full">
@@ -169,34 +172,66 @@ export const Dashboard = (_req: Request, res: Response) => {
                       </form>
                   </div>
              
-          </div>            
+          </div>   
+          <div class="flex flex-col md:flex-row gap-4 flex-wrap">         
           <div class="flex-1 flex-col h-full"> 
               <h2 class="text-xl mb-2"><i class="fas fa-cogs"></i> Service Configuration</h2>
               <div class="flex-1 bg-gray-800 p-6 rounded shadow-md h-full">
-                  <form method="POST" action="/update-service" class="mb-4 flex space-x-2 flex-wrap gap-4">
-                          <select name="feedUrl" placeholder="Feed url"
-                           class="flex-2 border rounded p-2 bg-gray-700 text-white">
-                           ${activeCategories
-                             .map(
-                               (f) =>
-                                 `
-                        <option value="${f.rss}" ${
-                                   f.rss == data.feedUrl ? "selected" : ""
-                                 } >${f.category}</option>
-                        `
-                             )
-                             .join("")}
-                           </select>
-                          <button type="submit" class="flex-1 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
-                              <i class="fas fa-cog"></i> Update Service
-                          </button>
-                      </form>
+                  <form method="POST" action="/update-service" class="mb-4 flex flex-col gap-4">
+                      <select name="feedUrl" placeholder="Feed url"
+                       class="flex-2 border rounded p-2 bg-gray-700 text-white">
+                       ${activeCategories
+                         .map(
+                           (f) =>
+                             `
+                    <option value="${f.rss}" ${
+                               f.rss == data.feedUrl ? "selected" : ""
+                             } >${f.category}</option>
+                    `
+                         )
+                         .join("")}
+                       </select>
+                       
+                      <div class="flex items-center gap-2">
+                          <input type="checkbox" name="enableTranslation" id="enableTranslation" 
+                                 class="w-4 h-4" ${
+                                   data.enableTranslation ? "checked" : ""
+                                 }>
+                          <label for="enableTranslation" class="text-gray-300">Enable Translation</label>
+                      </div>
+                      
+                      <select name="translationLanguage" class="border rounded p-2 bg-gray-700 text-white">
+                          <option value="fa" ${
+                            data.translationLanguage === "fa" ? "selected" : ""
+                          }>Farsi</option>
+                          <option value="tr" ${
+                            data.translationLanguage === "tr" ? "selected" : ""
+                          }>Turkish</option>
+                          <option value="es" ${
+                            data.translationLanguage === "es" ? "selected" : ""
+                          }>Spanish</option>
+                          <option value="fr" ${
+                            data.translationLanguage === "fr" ? "selected" : ""
+                          }>French</option>
+                          <option value="de" ${
+                            data.translationLanguage === "de" ? "selected" : ""
+                          }>German</option>
+                      </select>
+                      
+                      <input type="text" name="googleApiKey" placeholder="Google Cloud API Key" 
+                             value="${data.googleApiKey || ""}" 
+                             class="flex-2 border rounded p-2 bg-gray-700 text-white">
+                             
+                      <button type="submit" class="flex-1 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+                          <i class="fas fa-cog"></i> Update Service
+                      </button>
+                  </form>
               </div>
           </div>
-      </div>
-      <h2 class="text-xl mb-2"><i class="fas fa-list"></i> Channel List(${
-        data.channels.length
-      })</h2>
+                   <div class="flex-1 flex-col h-full"> 
+                <h2 class="text-xl mb-2"><i class="fas fa-list"></i> Channel List(${
+                  data.channels.length
+                })</h2>
       <div class="flex-col bg-gray-800 p-6 rounded shadow-md mb-4">
           <div class="overflow-auto">
               <div class="grid grid-cols-1 gap-2">
@@ -214,7 +249,11 @@ export const Dashboard = (_req: Request, res: Response) => {
           <p class="mt-4">Last News: <span class="text-cyan-400">${new Date(
             data.lastFetch
           ).toLocaleString()}</span></p>
+          </div>
       </div>
+      </div>
+      </div>
+
       <h2 class="text-xl mb-2"><i class="fas fa-file-alt"></i> Service Logs</h2>
       <div class="flex flex-col mb-4">
           <div class="overflow-auto bg-gray-800 rounded-lg shadow-md p-4">
@@ -225,9 +264,15 @@ export const Dashboard = (_req: Request, res: Response) => {
                       <span class="text-sm text-cyan-400 mr-2">[${
                         log.timestamp
                       }]</span>
-                      <span class="text-gray-400 rounded px-2 py-1 text-sm">${log.message.join(
-                        " "
-                      )}</span>
+                      <span class="${
+                        log.message.join(" ").includes("ERROR")
+                          ? "text-red-500 bg-red-900/20"
+                          : log.message.join(" ").includes("OK")
+                          ? "text-green-400 bg-green-900/20"
+                          : "text-gray-400"
+                      } rounded px-2 py-1 text-sm">${log.message.join(
+                    " "
+                  )}</span>
                   </div>
               `
                 )

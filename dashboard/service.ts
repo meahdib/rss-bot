@@ -13,7 +13,7 @@ export const RestartService = async (req: Request, res: Response) => {
     })
     .catch(async () => {
       await UpdateServicePID(null);
-      res.send("error!");
+      res.redirect("/dashboard");
     });
 };
 
@@ -24,11 +24,30 @@ export const StopService = async (req: Request, res: Response) => {
 };
 
 export const UpdateService = async (req: Request, res: Response) => {
-  const { feedUrl } = req.body;
+  const { feedUrl, enableTranslation, translationLanguage, googleApiKey } =
+    req.body;
 
   const data: BotData = JSON.parse(fs.readFileSync(DATA_PATH, "utf-8"));
   data.feedUrl = feedUrl;
+  data.enableTranslation = enableTranslation == "on" ? true : false;
+  if (data.enableTranslation) {
+    data.translationLanguage = translationLanguage;
+    data.googleApiKey = googleApiKey;
+  } else {
+    data.enableTranslation = false;
+    data.translationLanguage = "";
+    data.googleApiKey = "";
+  }
+
   fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
-  await startBotService();
-  res.redirect("/dashboard");
+  await startBotService()
+    .then(async (pid) => {
+      await UpdateServicePID(pid);
+
+      res.redirect("/dashboard");
+    })
+    .catch(async () => {
+      await UpdateServicePID(null);
+      res.redirect("/dashboard");
+    });
 };

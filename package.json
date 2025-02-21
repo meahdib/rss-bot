@@ -2,7 +2,7 @@
   "name": "rss-bot-dashboard",
   "version": "1.0.0",
   "main": "index.js",
-  "license":"MIT",
+  "license": "MIT",
   "author": "SaeedPoureshghi",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "preview": "tsc & tsc-alias & node dist/server.js"
   },
   "dependencies": {
+    "@google-cloud/translate": "^8.5.0",
     "bcrypt": "^5.1.1",
     "child_process": "^1.0.2",
     "dotenv": "^16.4.7",
@@ -37,9 +38,9 @@
     "@types/node": "^22.13.4",
     "@types/session-file-store": "^1.2.5",
     "cross-env": "^7.0.3",
+    "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3"
   }
 }

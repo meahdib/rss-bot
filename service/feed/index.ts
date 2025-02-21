@@ -63,7 +63,10 @@ export const sendFeed = async (
   }[],
   feeds: Partial<Feed>[],
   botusername: string,
-  category: string
+  category: string,
+  enableTranslation: boolean = false,
+  translationLanguage: string = "",
+  googleApiKey: string = ""
 ) => {
   try {
     // Construct the dynamic import path
@@ -74,7 +77,14 @@ export const sendFeed = async (
 
     // Ensure getFeed function exists before calling
     if (typeof module.sendFeed === "function") {
-      return await module.sendFeed(channels, feeds, botusername);
+      return await module.sendFeed(
+        channels,
+        feeds,
+        botusername,
+        enableTranslation,
+        translationLanguage,
+        googleApiKey
+      );
     } else {
       throw new Error(`getFeed function not found in ${modulePath}`);
     }

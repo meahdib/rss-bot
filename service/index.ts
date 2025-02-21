@@ -18,6 +18,9 @@ export const initService = () => {
     const data: BotData = {
       lastFetch,
       feedUrl: FEED_URL,
+      enableTranslation: false,
+      translationLanguage: "",
+      googleApiKey: "",
       channels: [],
     };
 
@@ -91,6 +94,18 @@ export const startBotService = async () => {
       if (message.includes("SERVICE STARTED")) {
         resolve(botProcess?.pid?.toString() ?? "0");
       }
+      if (message.includes("SERVICE STOPED")) {
+        treeKill(botProcess?.pid!, (error) => {
+          if (error) {
+            console.error("Error killing process:", error);
+          }
+          botProcess = null;
+          // Wait a moment to ensure the process is fully terminated
+          setTimeout(resolve, 2000);
+        });
+        botProcess = null;
+        reject("Stoped");
+      }
 
       if (message)
         if (message.includes("Error: 401: Unauthorized")) {
@@ -105,6 +120,7 @@ export const startBotService = async () => {
 
     botProcess.on("error", (error) => {
       console.error("[SERVICE]", "Service error:", error);
+      botProcess = null;
       reject("Error");
     });
   });

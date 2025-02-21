@@ -53,7 +53,6 @@ export const UpdateBotConfig = async (
     await UpdateServicePID(pid);
     return true;
   } catch (txt) {
-    console.log("[BOT]", "[ERROR]", txt);
     await UpdateServicePID(null);
     return false;
   }

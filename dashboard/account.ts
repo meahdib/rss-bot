@@ -26,10 +26,6 @@ export const LogOut = (req: Request, res: Response) => {
 
 export const UpdateConfig = async (req: Request, res: Response) => {
   const newBotToken = req.body.botToken;
-  const result = await UpdateBotConfig(newBotToken);
-  if (result) {
-    res.redirect("/dashboard");
-  } else {
-    res.send("error happend");
-  }
+  await UpdateBotConfig(newBotToken);
+  res.redirect("/dashboard");
 };

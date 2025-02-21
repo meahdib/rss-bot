@@ -2,6 +2,24 @@ import { send } from "@/service/bot";
 import Parser from "rss-parser";
 import "../../../logger";
 import { FEED_URL } from "@/service";
+import { v2 } from "@google-cloud/translate";
+import fs from "fs";
+
+const data: BotData = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
+
+let translate: v2.Translate | undefined;
+
+if (data.enableTranslation) {
+  try {
+    translate = new v2.Translate({ key: data.googleApiKey });
+  } catch (error) {
+    console.log(
+      "[SERVICE]",
+      "[ERROR]",
+      " error running google translate service"
+    );
+  }
+}
 
 const parser = new Parser({
   customFields: {
@@ -82,7 +100,9 @@ export const sendFeed = async (
     title: string;
   }[],
   feeds: Partial<Feed>[],
-  botusername: string
+  botusername: string,
+  enableTranslation: boolean = false,
+  translationLanguage: string = ""
 ) => {
   for (const channel of channels) {
     for (const filteredFeed of feeds) {
@@ -90,10 +110,22 @@ export const sendFeed = async (
       if (!filteredFeed.title) return;
       if (!filteredFeed.content) return;
 
+      let title = filteredFeed.title;
+      let content = filteredFeed.content;
+
+      if (enableTranslation && translate !== undefined) {
+        const [translatedTitle, translatedContent] = await Promise.all([
+          translate.translate(title, translationLanguage),
+          translate.translate(content, translationLanguage),
+        ]);
+        title = translatedTitle[0];
+        content = translatedContent[0];
+      }
+
       let readyCaption: string = "";
 
-      readyCaption += "✅ <b>" + filteredFeed.title + "</b>\n\n";
-      readyCaption += filteredFeed.content + "\n\n";
+      readyCaption += "✅ <b>" + title + "</b>\n\n";
+      readyCaption += content + "\n\n";
 
       if (filteredFeed.tags) {
         filteredFeed.tags.forEach((tag) => {
@@ -103,7 +135,7 @@ export const sendFeed = async (
       readyCaption += "\n\nBy Crypto News Robot @" + botusername;
 
       send(filteredFeed.media?.url, readyCaption, channel.channel);
-      await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay 5 seconds
     }
   }
 };
