@@ -4,16 +4,18 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](package.json)
 
 ![Description](screenshots/screenshot02.png)
-
-A Telegram bot dashboard that automatically fetches and forwards the latest cryptocurrency news from CoinDesk to your Telegram channels. Stay up-to-date with the crypto world by having fresh news delivered directly to your Telegram channels in real-time.
+A Telegram bot dashboard that automatically fetches and forwards news from multiple RSS sources to your Telegram channels. Supports real-time translation using Google Cloud Translate API to deliver content in your preferred language. Manage multiple news categories and channels through an intuitive dashboard interface.
 
 ## Key Features
 
-- Automatically fetches latest news from CoinDesk's RSS feed
-- Forwards news articles to configured Telegram channels
-- Easy-to-use dashboard for managing channel subscriptions
-- Real-time news delivery
-- Customizable posting frequency
+- Multi-source news aggregation from top RSS feeds (crypto, tech, business)
+- AI-powered translation for 5+ languages using Google Cloud Translate API
+- Centralized management for multiple Telegram channels
+- Real-time content delivery with configurable filters
+- Customizable posting schedules and frequency presets
+- Support for simultaneous RSS source monitoring
+- Language customization per channel/audience
+- Automatic content parsing and formatting
 
 ## Prerequisites
 
