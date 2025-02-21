@@ -28,6 +28,8 @@ interface NewsItem {
     };
   } | null;
   content: string;
+  category: string;
+  description: string;
 }
 
 interface Feed extends NewsItem {
@@ -42,4 +44,10 @@ interface Feed extends NewsItem {
 interface FeedResult {
   feed: Partial<Feed>[];
   last: string;
+}
+
+interface rssData {
+  category: string;
+  rss: string;
+  active: boolean;
 }

@@ -87,7 +87,7 @@ export const startBotService = async () => {
 
     botProcess.stdout?.on("data", (data) => {
       const message = data.toString() as string;
-
+      console.log(message);
       if (message.includes("SERVICE STARTED")) {
         resolve(botProcess?.pid?.toString() ?? "0");
       }

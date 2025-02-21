@@ -5,7 +5,11 @@ import FileStore from "session-file-store"; // Ensure you have this package inst
 import { ChangePasswordForm, Login, LoginForm } from "@/dashboard/login";
 import { Init } from "@/dashboard";
 import { Dashboard } from "@/dashboard/dashboard";
-import { RestartService, StopService } from "@/dashboard/service";
+import {
+  RestartService,
+  StopService,
+  UpdateService,
+} from "@/dashboard/service";
 import { ChangePassword, LogOut, UpdateConfig } from "@/dashboard/account";
 import { Home } from "@/dashboard/home";
 import { stopBotService } from "./service";
@@ -74,9 +78,7 @@ app.get("/change-password", requireAuth, ChangePasswordForm);
 app.post("/change-password", requireAuth, ChangePassword);
 app.post("/stop-service", requireAuth, StopService);
 
-app.post("/update-sevice", (_req: Request, res: Response) => {
-  res.redirect("/dashboard");
-});
+app.post("/update-service", UpdateService);
 
 app.post("/logout", LogOut);
 

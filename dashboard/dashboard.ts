@@ -3,6 +3,7 @@ import { CONFIG_PATH, DATA_PATH, LOG_PATH } from ".";
 import fs from "fs";
 import { botProcess } from "@/service";
 import { config as sconfig } from "@/config";
+import { errorPage } from "./error";
 
 export const Dashboard = (_req: Request, res: Response) => {
   const config: ConfigData = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
@@ -11,8 +12,14 @@ export const Dashboard = (_req: Request, res: Response) => {
     -10
   );
   const serviceStatus = botProcess ? "Running" : "Stopped";
+  try {
+    const categories = JSON.parse(
+      fs.readFileSync("./service/rss.json").toString()
+    ) as rssData[];
 
-  res.send(`
+    const activeCategories = categories.filter((c) => c.active);
+
+    res.send(`
   <!doctype html>
   <html>
   <head>
@@ -123,10 +130,10 @@ export const Dashboard = (_req: Request, res: Response) => {
           <h2 class="text-xl">Service Status: <span class="${
             botProcess ? "text-green-400" : "text-red-400"
           }">${serviceStatus}</span> ${
-    serviceStatus === "Running"
-      ? '<i class="fas fa-sync fa-spin text-green-400"></i>'
-      : '<i class="fas fa-power-off text-red-400"></i>'
-  }</h2>
+      serviceStatus === "Running"
+        ? '<i class="fas fa-sync fa-spin text-green-400"></i>'
+        : '<i class="fas fa-power-off text-red-400"></i>'
+    }</h2>
     
           <form method="POST" action="/restart-service">
               <button type="submit" class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 cursor-pointer">
@@ -167,9 +174,19 @@ export const Dashboard = (_req: Request, res: Response) => {
               <h2 class="text-xl mb-2"><i class="fas fa-cogs"></i> Service Configuration</h2>
               <div class="flex-1 bg-gray-800 p-6 rounded shadow-md h-full">
                   <form method="POST" action="/update-service" class="mb-4 flex space-x-2 flex-wrap gap-4">
-                          <input type="text" name="feedUrl" placeholder="Feed url" value="${
-                            data.feedUrl
-                          }" class="flex-2 border rounded p-2 bg-gray-700 text-white">
+                          <select name="feedUrl" placeholder="Feed url"
+                           class="flex-2 border rounded p-2 bg-gray-700 text-white">
+                           ${activeCategories
+                             .map(
+                               (f) =>
+                                 `
+                        <option value="${f.rss}" ${
+                                   f.rss == data.feedUrl ? "selected" : ""
+                                 } >${f.category}</option>
+                        `
+                             )
+                             .join("")}
+                           </select>
                           <button type="submit" class="flex-1 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
                               <i class="fas fa-cog"></i> Update Service
                           </button>
@@ -219,8 +236,8 @@ export const Dashboard = (_req: Request, res: Response) => {
       </div>    
       <footer class="text-white p-4 mt-4 text-center flex justify-between">
           <p>&copy; ${new Date().getFullYear()} ${
-    sconfig.service_name
-  }. All rights reserved.</p>
+      sconfig.service_name
+    }. All rights reserved.</p>
           <div>
                <a href="https://github.com/TelegramBotDashboards/rss-bot" class="text-cyan-400 hover:underline" target="_blank">
                   <i class="fab fa-github"></i> GitHub
@@ -230,4 +247,9 @@ export const Dashboard = (_req: Request, res: Response) => {
   </div>
   </body>
   </html>`);
+  } catch (err) {
+    console.log((err as Error).message);
+    const html = errorPage();
+    res.status(500).send(html);
+  }
 };

@@ -1,78 +1,58 @@
-import { send } from "@/service/bot";
-import Parser from "rss-parser";
-import "../../logger";
-import { FEED_URL } from "@/service";
-
-const parser = new Parser({
-  customFields: {
-    item: ["media:content"],
-  },
-});
-
-const getRawFeed = async () => {
+export const getRawFeed = async (category: string) => {
   try {
-    const feed = await parser.parseURL(FEED_URL);
+    // Construct the dynamic import path
+    const modulePath = `./${category}`;
 
-    return feed;
+    // Dynamically import the module
+    const module = await import(modulePath);
+
+    // Ensure getFeed function exists before calling
+    if (typeof module.getRawFeed === "function") {
+      return await module.getRawFeed();
+    } else {
+      console.log(
+        "[SERVICE]",
+        "[ERROR]",
+        `getFeed function not found in ${modulePath}`
+      );
+    }
   } catch (error) {
-    throw error;
+    console.log(
+      "[SERVICE]",
+      "[ERROR]",
+      `Error loading feed for category "${category}":`,
+      error
+    );
+    return null;
   }
 };
 
-export const getFeed = async (): Promise<FeedResult> => {
+export const getFeed = async (category: string) => {
   try {
-    const feed = await getRawFeed();
+    // Construct the dynamic import path
+    const modulePath = `./${category}`;
 
-    const result: Partial<Feed>[] = feed.items.map((item: any) => {
-      const {
-        title,
-        link,
-        pubDate,
-        categories,
-        ["media:content"]: media,
-        content,
-      } = item as NewsItem;
+    // Dynamically import the module
+    const module = await import(modulePath);
 
-      let tags: string[] = [];
-
-      if (categories) {
-        tags = categories
-          .map((category) =>
-            typeof category === "object" && category.$.domain === "tag"
-              ? category._
-              : null
-          )
-          .filter((tag) => tag !== null) as string[];
-      }
-
-      return {
-        title,
-        link,
-        pubDate,
-        tags,
-        content,
-        media: {
-          url: media ? media.$.url : null,
-          type: media ? media.$.type : null,
-          width: media ? media.$.width : null,
-          height: media ? media.$.height : null,
-        },
-      };
-    });
-
-    const lastPubDate = result.reduce((latest, item) => {
-      if (!item.pubDate) return latest;
-
-      const itemDate = new Date(item.pubDate).getTime();
-      return itemDate > latest ? itemDate : latest;
-    }, 0);
-
-    const last = new Date(lastPubDate).toISOString();
-
-    return { feed: result, last };
+    // Ensure getFeed function exists before calling
+    if (typeof module.getFeed === "function") {
+      return await module.getFeed();
+    } else {
+      console.log(
+        "[SERVICE]",
+        "[ERROR]",
+        `getFeed function not found in ${modulePath}`
+      );
+    }
   } catch (error) {
-    console.error((error as Error).message);
-    return { feed: [], last: new Date(0).toISOString() };
+    console.log(
+      "[SERVICE]",
+      "[ERROR]",
+      `Error loading feed for category "${category}":`,
+      error
+    );
+    return null;
   }
 };
 
@@ -82,28 +62,24 @@ export const sendFeed = async (
     title: string;
   }[],
   feeds: Partial<Feed>[],
-  botusername: string
+  botusername: string,
+  category: string
 ) => {
-  for (const channel of channels) {
-    for (const filteredFeed of feeds) {
-      if (!filteredFeed.media?.url) return;
-      if (!filteredFeed.title) return;
-      if (!filteredFeed.content) return;
+  try {
+    // Construct the dynamic import path
+    const modulePath = `./${category}`;
 
-      let readyCaption: string = "";
+    // Dynamically import the module
+    const module = await import(modulePath);
 
-      readyCaption += "✅ <b>" + filteredFeed.title + "</b>\n\n";
-      readyCaption += filteredFeed.content + "\n\n";
-
-      if (filteredFeed.tags) {
-        filteredFeed.tags.forEach((tag) => {
-          readyCaption += "#" + tag.trim().replace(" ", "_") + "\n";
-        });
-      }
-      readyCaption += "\n\nBy Crypto News Robot @" + botusername;
-
-      send(filteredFeed.media?.url, readyCaption, channel.channel);
-      await new Promise((resolve) => setTimeout(resolve, 5000)); // Delay 2 seconds
+    // Ensure getFeed function exists before calling
+    if (typeof module.sendFeed === "function") {
+      return await module.sendFeed(channels, feeds, botusername);
+    } else {
+      throw new Error(`getFeed function not found in ${modulePath}`);
     }
+  } catch (error) {
+    console.error(`Error loading feed for category "${category}":`, error);
+    return null;
   }
 };
