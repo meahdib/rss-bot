@@ -96,3 +96,15 @@ yarn preview
 ## Security Notice
 
 Never commit your `.env` file to version control. Make sure it's included in your `.gitignore` file.
+
+## Contributing
+
+We welcome contributions! To contribute:
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feat/your-feature-name`
+3. Commit your changes
+4. Push to your fork: `git push origin feat/your-feature-name`
+5. Open a Pull Request against the main branch of the original repository
+
+Please ensure your code follows project conventions and any new features are properly documented. Make sure to keep your branch updated with the latest changes from the main repository and verify all tests pass before submitting.
