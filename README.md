@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](package.json)
 
-![Description](screenshots/screenshot01.png)
+![Description](screenshots/screenshot02.png)
 
 A Telegram bot dashboard that automatically fetches and forwards the latest cryptocurrency news from CoinDesk to your Telegram channels. Stay up-to-date with the crypto world by having fresh news delivered directly to your Telegram channels in real-time.
 
