@@ -90,13 +90,13 @@ export const ChangePasswordForm = (req: Request, res: Response) => {
   res.send(`
     <!doctype html>
     <html>
-    <head>
+     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/png" href="/assets/fav.png">      
-            <link rel="stylesheet" href="/assets/global.js" />
-      <link rel="stylesheet" href="/assets/all.min.css" />
-      <title>${config.service_name} Dashboard</title>
+           <script src="/assets/global.js"></script>
+      <link rel="stylesheet" href="/assets/css/all.min.css" />
+      title>${config.service_name} Dashboard</title>
   </head>
       <body class="h-screen bg-gray-900">
         <div class="flex flex-col justify-center items-center h-full">
