@@ -13,6 +13,7 @@ import {
 import { ChangePassword, LogOut, UpdateConfig } from "@/dashboard/account";
 import { Home } from "@/dashboard/home";
 import { stopBotService } from "./service";
+import "dotenv/config";
 
 declare module "express-session" {
   interface SessionData {

@@ -1,28 +1,120 @@
 [
-    { "category": "Art", "rss": "https://arrestedmotion.com/feed/", "active": false },
-    { "category": "Business", "rss": "https://www.businessinsider.com/rss", "active": false },
-    { "category": "Career", "rss": "https://redcircle.com/shows/dear-twentysomething", "active": false },
-    { "category": "Celebrities", "rss": "https://www.tmz.com/rss.xml", "active": false },
-    { "category": "Communication", "rss": "https://citationsneeded.libsyn.com/rss", "active": false },
-    { "category": "Crypto & NFTs", "rss": "https://rss.feedspot.com/nft_art_rss_feeds/", "active": false },
-    { "category": "Design", "rss": "https://www.creativebloq.com/feed", "active": false },
-    { "category": "Economics", "rss": "https://marginalrevolution.com/feed", "active": false },
-    { "category": "Crypto", "rss": "https://www.coindesk.com/arc/outboundfeeds/rss", "active": true },
-    { "category": "Education", "rss": "https://www.edutopia.org/rss.xml", "active": false },
-    { "category": "Entertainment", "rss": "https://www.kqed.org/arts/feed", "active": false },
-    { "category": "Fashion", "rss": "https://www.vogue.com/rss", "active": false },
-    { "category": "Food", "rss": "https://www.seriouseats.com/rss", "active": false },
-    { "category": "Games", "rss": "https://kotaku.com/rss", "active": false },
-    { "category": "Health & Medicine", "rss": "https://www.medicalnewstoday.com/rss", "active": false },
-    { "category": "Languages & Linguistics", "rss": "https://www.omniglot.com/blog/?feed=rss2", "active": false },
-    { "category": "Law", "rss": "https://abovethelaw.com/rss", "active": false },
-    { "category": "Marketing & Advertising", "rss": "https://moz.com/community/q/rss", "active": false },
-    { "category": "Movies & Music", "rss": "https://www.billboard.com/feed/", "active": false },
-    { "category": "Nature", "rss": "https://www.nationalgeographic.com/rss", "active": false },
-    { "category": "News & Politics", "rss": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", "active": false },
-    { "category": "Psychology", "rss": "https://www.psychologytoday.com/us/front/feed", "active": false },
-    { "category": "Science & Technology", "rss": "https://www.wired.com/feed/rss", "active": false },
-    { "category": "Self Development", "rss": "https://www.lifehack.org/feed", "active": false },
-    { "category": "Football", "rss": "https://www.fourfourtwo.com/feeds/all", "active": true },
-    { "category": "Travel", "rss": "https://www.lonelyplanet.com/news/feed/rss", "active": false }
+  {
+    "category": "Art",
+    "rss": "https://arrestedmotion.com/feed/",
+    "active": true
+  },
+  {
+    "category": "Business",
+    "rss": "https://www.businessinsider.com/rss",
+    "active": true
+  },
+  {
+    "category": "Career",
+    "rss": "https://redcircle.com/shows/dear-twentysomething",
+    "active": true
+  },
+  {
+    "category": "Celebrities",
+    "rss": "https://www.tmz.com/rss.xml",
+    "active": true
+  },
+  {
+    "category": "Communication",
+    "rss": "https://citationsneeded.libsyn.com/rss",
+    "active": true
+  },
+  {
+    "category": "Crypto & NFTs",
+    "rss": "https://rss.feedspot.com/nft_art_rss_feeds/",
+    "active": true
+  },
+  {
+    "category": "Design",
+    "rss": "https://www.creativebloq.com/feed",
+    "active": true
+  },
+  {
+    "category": "Economics",
+    "rss": "https://marginalrevolution.com/feed",
+    "active": true
+  },
+  {
+    "category": "Crypto",
+    "rss": "https://www.coindesk.com/arc/outboundfeeds/rss",
+    "active": true
+  },
+  {
+    "category": "Education",
+    "rss": "https://www.edutopia.org/rss.xml",
+    "active": true
+  },
+  {
+    "category": "Entertainment",
+    "rss": "https://www.kqed.org/arts/feed",
+    "active": true
+  },
+  { "category": "Fashion", "rss": "https://www.vogue.com/rss", "active": true },
+  {
+    "category": "Food",
+    "rss": "https://www.seriouseats.com/rss",
+    "active": true
+  },
+  { "category": "Games", "rss": "https://kotaku.com/rss", "active": true },
+  {
+    "category": "Health & Medicine",
+    "rss": "https://www.medicalnewstoday.com/rss",
+    "active": true
+  },
+  {
+    "category": "Languages & Linguistics",
+    "rss": "https://www.omniglot.com/blog/?feed=rss2",
+    "active": true
+  },
+  { "category": "Law", "rss": "https://abovethelaw.com/rss", "active": true },
+  {
+    "category": "Marketing & Advertising",
+    "rss": "https://moz.com/community/q/rss",
+    "active": true
+  },
+  {
+    "category": "Movies & Music",
+    "rss": "https://www.billboard.com/feed/",
+    "active": true
+  },
+  {
+    "category": "Nature",
+    "rss": "https://www.nationalgeographic.com/rss",
+    "active": true
+  },
+  {
+    "category": "News & Politics",
+    "rss": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+    "active": true
+  },
+  {
+    "category": "Psychology",
+    "rss": "https://www.psychologytoday.com/us/front/feed",
+    "active": true
+  },
+  {
+    "category": "Science & Technology",
+    "rss": "https://www.wired.com/feed/rss",
+    "active": true
+  },
+  {
+    "category": "Self Development",
+    "rss": "https://www.lifehack.org/feed",
+    "active": true
+  },
+  {
+    "category": "Football",
+    "rss": "https://www.fourfourtwo.com/feeds/all",
+    "active": true
+  },
+  {
+    "category": "Travel",
+    "rss": "https://www.lonelyplanet.com/news/feed/rss",
+    "active": true
+  }
 ]
